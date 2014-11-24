@@ -13,9 +13,42 @@ using std::swap;
 using std::uniform_int_distribution;
 using std::vector;
 
+static int count_3 = 0;
+static int count_2 = 0;
 
-// @include
+// 2014.11.24 also my method
+int NumberOfWays_3(int n, int m, vector<vector<int>> & table) {
+    count_3++;
+  if (n < m) {
+ //   swap(n, m);
+  }
+  if (n==1 || m==1) {
+      table[1][1] = 1;
+      return 1;
+  }
+  //int ha = NumberOfWays_3(n,m-1, table) + NumberOfWays_3(n-1,m, table);// - NumberOfWays_2(n-1,m-1);
+  int k1 = 0;
+  if (table[n][m-1]>0)
+    k1 = table[n][m-1];
+  else
+    k1 = NumberOfWays_3(n,m-1, table);
+  
+  int k2 = 0;
+  if (table[n-1][m]>0)
+    k2 = table[n-1][m];
+  else
+    k2 = NumberOfWays_3(n-1,m, table);
+
+  int ha = k1 + k2;
+  table[n][m] = ha;
+  return ha;
+  
+}
+
+
+// 2014.11.24 my method
 int NumberOfWays_2(int n, int m) {
+    count_2++;
   if (n < m) {
  //   swap(n, m);
   }
@@ -25,7 +58,7 @@ int NumberOfWays_2(int n, int m) {
   return ha;
   
 }
-// @exclude
+
 
 
 // @include
@@ -66,7 +99,7 @@ int CheckAns(int n, int k) {
 
 int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
-  for (int times = 0; times < 1000; ++times) {
+  for (int times = 0; times < 1; ++times) {
     int n, m;
     if (argc == 3) {
       n = atoi(argv[1]), m = atoi(argv[2]);
@@ -75,10 +108,18 @@ int main(int argc, char* argv[]) {
       n = dis(gen);
       m = dis(gen);
     }
+    n=10;
+    m=7;
+    vector<vector<int>> table(n + 1, vector<int>(m + 1, -1));
     cout << "n = " << n << ", m = " << m
-         << ", number of ways = " << NumberOfWays_2(n, m) << endl;
+         << ", number of ways_3 = " << NumberOfWays_3(n, m, table) << endl;
+    cout << "n = " << n << ", m = " << m
+         << ", number of ways_2 = " << NumberOfWays_2(n, m) << endl;
     cout << "n = " << n << ", m = " << m
          << ", correct number of ways = " << NumberOfWays(n, m) << endl;
+
+    printf("count_2=%d, count_3=%d\n",count_2,count_3);
+
     assert(CheckAns(n + m - 2, m - 1) == NumberOfWays_2(n, m));
     if (argc == 3) {
       break;
