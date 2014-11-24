@@ -9,7 +9,7 @@
 using std::cout;
 using std::default_random_engine;
 using std::endl;
-using std::ostream_iterator;
+//using std::ostream_iterator;
 using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
@@ -22,20 +22,27 @@ void GeneratePowerSet(const vector<int>& S) {
   GeneratePowerSetHelper(S, 0, &subset);
 }
 
-void GeneratePowerSetHelper(const vector<int>& S, int m,
-                            vector<int>* subset) {
-  if (!subset->empty()) {
+void PrintIt(const vector<int> & subset) {
+  if (!subset.empty()) {
     // Print the subset.
-    cout << subset->front();
-    for (int i = 1; i < subset->size(); ++i) {
-      cout << "," << (*subset)[i];
+    cout << subset.front();
+    for (int i = 1; i < subset.size(); ++i) {
+      cout << "," << (subset)[i];
     }
   }
-  cout << endl;
+  cout << endl;  
+}
+
+void GeneratePowerSetHelper(const vector<int>& S, int m,
+                            vector<int>* subset) {
 
   for (int i = m; i < S.size(); ++i) {
+    //cout <<"-push_back\n";
     subset->emplace_back(S[i]);
+    //cout << "-func()\n";
+    PrintIt(*subset);
     GeneratePowerSetHelper(S, i + 1, subset);
+    //cout<< "-pop\n";
     subset->pop_back();
   }
 }
@@ -50,7 +57,8 @@ int main(int argc, char* argv[]) {
   } else {
     default_random_engine gen((random_device())());
     uniform_int_distribution<int> dis(1, 10);
-    S.resize(dis(gen));
+    //S.resize(dis(gen));
+    S.resize(3);
     for (int i = 0; i < S.size(); ++i) {
       S[i] = i;
     }
