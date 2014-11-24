@@ -15,14 +15,19 @@ using std::uniform_int_distribution;
 using std::vector;
 
 void GeneratePowerSetHelper(const vector<int>& S, int m, vector<int>* subset);
+void GeneratePowerSetHelper2(const vector<int>& S, int m, vector<int>* subset);
+
+static int count = 0;
 
 // @include
 void GeneratePowerSet(const vector<int>& S) {
   vector<int> subset;
-  GeneratePowerSetHelper(S, 0, &subset);
+  //GeneratePowerSetHelper(S, 0, &subset);
+  GeneratePowerSetHelper2(S, 0, &subset);
 }
 
 void PrintIt(const vector<int> & subset) {
+  count++;
   if (!subset.empty()) {
     // Print the subset.
     cout << subset.front();
@@ -33,6 +38,21 @@ void PrintIt(const vector<int> & subset) {
   cout << endl;  
 }
 
+
+// 2014/11/24, my version
+void GeneratePowerSetHelper2(const vector<int>& S, int m,
+                            vector<int>* subset) {
+
+  //without m
+  GeneratePowerSetHelper(S, m + 1, subset);
+  PrintIt(*subset);
+  //with m
+  subset->emplace_back(S[m]);
+  GeneratePowerSetHelper(S, m + 1, subset);
+  PrintIt(*subset);
+}
+
+// original code
 void GeneratePowerSetHelper(const vector<int>& S, int m,
                             vector<int>* subset) {
 
@@ -64,5 +84,6 @@ int main(int argc, char* argv[]) {
     }
   }
   GeneratePowerSet(S);
+  printf("\n\n\n  Final count = %d\n", count);
   return 0;
 }
