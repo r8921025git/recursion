@@ -13,6 +13,21 @@ using std::swap;
 using std::uniform_int_distribution;
 using std::vector;
 
+
+// @include
+int NumberOfWays_2(int n, int m) {
+  if (n < m) {
+ //   swap(n, m);
+  }
+  if (n==1 || m==1)
+    return 1;
+  int ha = NumberOfWays_2(n,m-1) + NumberOfWays_2(n-1,m);// - NumberOfWays_2(n-1,m-1);
+  return ha;
+  
+}
+// @exclude
+
+
 // @include
 int NumberOfWays(int n, int m) {
   if (n < m) {
@@ -61,8 +76,10 @@ int main(int argc, char* argv[]) {
       m = dis(gen);
     }
     cout << "n = " << n << ", m = " << m
-         << ", number of ways = " << NumberOfWays(n, m) << endl;
-    assert(CheckAns(n + m - 2, m - 1) == NumberOfWays(n, m));
+         << ", number of ways = " << NumberOfWays_2(n, m) << endl;
+    cout << "n = " << n << ", m = " << m
+         << ", correct number of ways = " << NumberOfWays(n, m) << endl;
+    assert(CheckAns(n + m - 2, m - 1) == NumberOfWays_2(n, m));
     if (argc == 3) {
       break;
     }
