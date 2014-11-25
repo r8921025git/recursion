@@ -19,30 +19,18 @@ static int count_2 = 0;
 // 2014.11.24 also my method
 int NumberOfWays_3(int n, int m, vector<vector<int>> & table) {
     count_3++;
-  if (n < m) {
- //   swap(n, m);
-  }
+    
   if (n==1 || m==1) {
-      table[1][1] = 1;
-      return 1;
+    table[n][m] = 1;
+    return 1;
   }
-  //int ha = NumberOfWays_3(n,m-1, table) + NumberOfWays_3(n-1,m, table);// - NumberOfWays_2(n-1,m-1);
-  int k1 = 0;
-  if (table[n][m-1]>0)
-    k1 = table[n][m-1];
-  else
-    k1 = NumberOfWays_3(n,m-1, table);
-  
-  int k2 = 0;
-  if (table[n-1][m]>0)
-    k2 = table[n-1][m];
-  else
-    k2 = NumberOfWays_3(n-1,m, table);
 
-  int ha = k1 + k2;
-  table[n][m] = ha;
-  return ha;
-  
+  if (table[n-1][m] < 0)
+    table[n-1][m]=NumberOfWays_3(n-1,m,table);
+  if (table[n][m-1] < 0)
+    table[n][m-1]=NumberOfWays_3(n,m-1,table);
+  int result = table[n][m-1] + table[n-1][m];
+  return result;
 }
 
 
@@ -108,8 +96,8 @@ int main(int argc, char* argv[]) {
       n = dis(gen);
       m = dis(gen);
     }
-    n=10;
-    m=7;
+    n=3;
+    m=3;
     vector<vector<int>> table(n + 1, vector<int>(m + 1, -1));
     cout << "n = " << n << ", m = " << m
          << ", number of ways_3 = " << NumberOfWays_3(n, m, table) << endl;
