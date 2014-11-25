@@ -22,6 +22,7 @@ static int count = 0;
 // @include
 void GeneratePowerSet(const vector<int>& S) {
   vector<int> subset;
+  //subset.push_back(S[0]);
   //GeneratePowerSetHelper(S, 0, &subset);
   GeneratePowerSetHelper2(S, 0, &subset);
 }
@@ -43,13 +44,14 @@ void PrintIt(const vector<int> & subset) {
 void GeneratePowerSetHelper2(const vector<int>& S, int m,
                             vector<int>* subset) {
 
-  //without m
-  GeneratePowerSetHelper(S, m + 1, subset);
-  PrintIt(*subset);
-  //with m
-  subset->emplace_back(S[m]);
-  GeneratePowerSetHelper(S, m + 1, subset);
-  PrintIt(*subset);
+  for (int i=m; i<S.size(); ++i){ 
+
+    subset->push_back(S[i]);
+    PrintIt(*subset);
+    GeneratePowerSetHelper2(S, i + 1, subset);
+    subset->pop_back();
+  }
+
 }
 
 // original code
