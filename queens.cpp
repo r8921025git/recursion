@@ -25,12 +25,18 @@ vector<vector<string>> NQueens(int n) {
   vector<vector<string>> result;
   vector<int> col_place;
   Helper(n, 0, col_place);
+  
   return result;
 }
 
 
 void Helper(int n, int row, vector<int> & col_place) {
     //vector<int> col_place;
+    if (row==n) {
+        CreateOutput(col_place);
+        return;    
+    }
+    
     for (int k=0;k<n;++k) {
         col_place[row] = k;
         if (IsFeasible(col_place, row)) {
