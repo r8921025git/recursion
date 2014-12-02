@@ -20,11 +20,32 @@ void GeneratePowerSetHelper2(const vector<int>& S, int m, vector<int>* subset);
 static int count = 0;
 
 // @include
-void GeneratePowerSet(const vector<int>& S) {
-  vector<int> subset;
-  //subset.push_back(S[0]);
-  //GeneratePowerSetHelper(S, 0, &subset);
-  GeneratePowerSetHelper2(S, 0, &subset);
+vector<vector<int>> GeneratePowerSet(const vector<int>& S) {
+    // remove last elem
+    vector<int> subset = S;
+    if (subset.empty()) {
+        vector<vector<int>> nset;
+        return nset;
+    }
+    int b = subset.back();
+    subset.pop_back();
+    // recurse
+    vector<vector<int>> pset = GeneratePowerSet(subset);
+    // append
+    vector<vector<int>> nset = pset;
+    if (pset.empty()) {
+        vector<int> tmp;
+        nset.push_back(tmp);
+        vector<int> tmp2 = {b};
+        nset.push_back(tmp2);
+    }
+    
+    for (auto i : pset)      {
+        vector<int> tmp = i;
+        tmp.push_back(b);
+        nset.push_back(tmp);
+    }
+    return nset;
 }
 
 void PrintIt(const vector<int> & subset) {
@@ -40,17 +61,9 @@ void PrintIt(const vector<int> & subset) {
 }
 
 
-// 2014/11/24, my version
+// 2014/12/2, my version
 void GeneratePowerSetHelper2(const vector<int>& S, int m,
                             vector<int>* subset) {
-
-  for (int i=m; i<S.size(); ++i){ 
-
-    subset->push_back(S[i]);
-    PrintIt(*subset);
-    GeneratePowerSetHelper2(S, i + 1, subset);
-    subset->pop_back();
-  }
 
 }
 
@@ -85,7 +98,10 @@ int main(int argc, char* argv[]) {
       S[i] = i;
     }
   }
-  GeneratePowerSet(S);
-  printf("\n\n\n  Final count = %d\n", count);
+  vector<vector<int>> pset = GeneratePowerSet(S);
+  for (auto i : pset)      {
+      PrintIt(i);
+  }
+  printf("Final count = %d\n", count);
   return 0;
 }
