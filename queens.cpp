@@ -16,32 +16,29 @@ using std::stoi;
 using std::uniform_int_distribution;
 using std::vector;
 
-void NQueensHelper(int n, int row, vector<int>* col_placement,
-                   vector<vector<string>>* result);
 vector<string> CreateOutput(const vector<int>& col_placement);
 bool IsFeasible(const vector<int>& col_placement, int row);
+void Helper(int n, int row, vector<int> & col_place);
 
 // @include
 vector<vector<string>> NQueens(int n) {
-  vector<int> placement(n);
   vector<vector<string>> result;
-  NQueensHelper(n, 0, &placement, &result);
+  vector<int> col_place;
+  Helper(n, 0, col_place);
   return result;
 }
 
-void NQueensHelper(int n, int row, vector<int>* col_placement,
-                   vector<vector<string>>* result) {
-  if (row == n) {
-    result->emplace_back(CreateOutput(*col_placement));
-  } else {
-    for (int col = 0; col < n; ++col) {
-      (*col_placement)[row] = col;
-      if (IsFeasible(*col_placement, row)) {
-        NQueensHelper(n, row + 1, col_placement, result);
-      }
+
+void Helper(int n, int row, vector<int> & col_place) {
+    //vector<int> col_place;
+    for (int k=0;k<n;++k) {
+        col_place[row] = k;
+        if (IsFeasible(col_place, row)) {
+            Helper(n, row+1, col_place);
+        }
     }
-  }
 }
+
 
 vector<string> CreateOutput(const vector<int>& col_placement) {
   vector<string> sol;
@@ -85,5 +82,6 @@ int main(int argc, char** argv) {
     cout << endl;
   }
   printf("\n\n  numresult = %d\n\n", numresult);
+  printf("\n\n  numresult should be 92 for n=8\n\n");
   return 0;
 }
