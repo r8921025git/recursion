@@ -15,18 +15,28 @@ using std::stoi;
 using std::uniform_int_distribution;
 using std::vector;
 
-void CombinationsHelper(int n, int k,  int start, vector<int>* ans,
-                        vector<vector<int>>* result);
 
-// @include
+void CombinationsHelper(int start, int n, int k, vector<int> &r, vector<vector<int>> &ans) {
+  if (r.size()==k) {
+    ans.push_back(r);        
+    return;
+  }                       
+  for (int i=start; i<=n; ++i) {
+    r.push_back(i);                         
+    CombinationsHelper(i+1, n, k, r, ans);
+    r.pop_back();
+  }
+}
+
+
 vector<vector<int>> Combinations(int n, int k) {
-
+  vector<int> r;
+  vector<vector<int>> ans;
+  CombinationsHelper(1, n, k, r, ans);
+  return ans;
 }
 
-void CombinationsHelper() {
 
-}
-// @exclude
 
 int main(int argc, char** argv) {
   default_random_engine gen((random_device())());
