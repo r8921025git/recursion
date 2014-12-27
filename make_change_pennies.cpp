@@ -1,5 +1,7 @@
 #include <iostream>
+#include <vector>
 using namespace std;
+using std::vector;
 
 int cnt = 0;
 void sumN(int sum, int c, int n){
@@ -53,8 +55,14 @@ int make_change(int n, int denom){
         ways += make_change(n-i*denom, next_denom);
     return ways;
 }
+
+int david(int n,vector<int> coins) {
+    return 0;
+}
+
 int main(){
-    int n = 10;
+    vector<int> coins={1,5,10,25};
+    int n = 16;
     sumN(0, 25, n);
     cout<<cnt<<endl;
     cout<<make_change(n, 25)<<endl;
