@@ -28,7 +28,7 @@ vector<vector<string>> NQueens(int n) {
   return result;
 }
 
-
+// try from row 1 to row n
 void Helper(int n, int row, vector<int> & col_place, vector<vector<string>> &result) {
     //vector<int> col_place;
     if (row==n) {
@@ -36,7 +36,7 @@ void Helper(int n, int row, vector<int> & col_place, vector<vector<string>> &res
         result.push_back(vs);
     }
     //cout<<"row="<<row<<endl;
-    for (int k=0;k<n;++k) {
+    for (int k=0;k<n;++k) { // when at "row", try all possible columns
         col_place[row] = k;
         if (IsFeasible(col_place, row)) {
             Helper(n, row+1, col_place, result);
