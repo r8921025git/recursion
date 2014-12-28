@@ -56,8 +56,25 @@ int make_change(int n, int denom){
     return ways;
 }
 
-int david(int n,vector<int> coins) {
-    return 0;
+int dada(int n,vector<int> coins) {
+    const int N = coins.size();
+    if (n==0)
+        return 1;
+    
+    if (N==0)
+        return 0;
+
+    int coin_value = coins[N-1];
+    vector<int> subset_coins=coins;
+    subset_coins.pop_back();
+    int result = dada(n, subset_coins);
+    
+    int i=1;
+    while(n-i*coin_value >=0) {
+        result += dada(n - i*coin_value, subset_coins);
+        i++;
+    }
+    return result;
 }
 
 int main(){
@@ -67,5 +84,6 @@ int main(){
     cout<<cnt<<endl;
     cout<<make_change(n, 25)<<endl;
     cout<<sum_n(0, 25, n)<<endl;
+    cout<<"my method: "<<dada(n, coins)<<endl;
     return 0;
 }
