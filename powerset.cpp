@@ -44,15 +44,15 @@ void Func(vector<int> S, vector<int> cur, vector<vector<int>> &result) {
 // implement Powerset with DFS
 void Func_DFS(int start, vector<int> S, vector<int> cur, vector<vector<int>> &result) {
     
+    result.push_back(cur);
+
     const int N = S.size();
     if (start >= N)
         return;
-
-    result.push_back(cur);
-
+        
     for (int i=start; i<N; ++i) {
         cur.push_back(S[i]);
-        Func_DFS(start+1, S, cur, result);
+        Func_DFS(i+1, S, cur, result); // i+1, not start+1 !!!
         cur.pop_back(); // next iteration try another "i"
         
     }
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
     default_random_engine gen((random_device())());
     uniform_int_distribution<int> dis(1, 10);
     //S.resize(dis(gen));
-    S.resize(3);
+    S.resize(4);
     for (int i = 0; i < S.size(); ++i) {
       S[i] = i;
     }
