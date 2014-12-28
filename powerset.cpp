@@ -41,11 +41,19 @@ void Func(vector<int> S, vector<int> cur, vector<vector<int>> &result) {
     
 }
 
+// implement as DFS
+void Func_DFS(vector<int> S, vector<int> cur, vector<vector<int>> &result) {
+
+    
+    
+}
+
 
 vector<vector<int>> GeneratePowerSet(vector<int> S) {
     vector<int> cur;
     vector<vector<int>> result;
-    Func(S, cur, result);
+    //Func(S, cur, result);
+    Func_DFS(S, cur, result);
     return result;
 }
 
