@@ -19,15 +19,17 @@ int count = 0;
 
 
 void Func(vector<int> S, vector<int> cur, vector<vector<int>> &result) {
-    result.push_back(cur);
+    
     
     // Either include the last item, Or exclude the last item
     
     
     const int N = S.size();
-    if (N==0)
+    if (N==0) {
+        result.push_back(cur);
         return;
-        
+    }
+    
     int last_item = S[N-1];
     S.pop_back();
 
@@ -68,7 +70,7 @@ int main(int argc, char* argv[]) {
     default_random_engine gen((random_device())());
     uniform_int_distribution<int> dis(1, 10);
     //S.resize(dis(gen));
-    S.resize(1);
+    S.resize(4);
     for (int i = 0; i < S.size(); ++i) {
       S[i] = i;
     }
