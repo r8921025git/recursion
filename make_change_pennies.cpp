@@ -67,11 +67,11 @@ int dada(int n,vector<int> coins) {
     int coin_value = coins[N-1];
     vector<int> subset_coins=coins;
     subset_coins.pop_back();
-    int result = dada(n, subset_coins);
+    int result = dada(n, subset_coins); // either exclude last coin
     
     int i=1;
     while(n-i*coin_value >=0) {
-        result += dada(n - i*coin_value, subset_coins);
+        result += dada(n - i*coin_value, subset_coins); // Or, use last coin 1 time, 2 times, 3 times, ...
         i++;
     }
     return result;
